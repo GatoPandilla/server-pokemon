@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 export async function connectToMongoDB() {
-  const uri = "mongodb+srv://jharoldm:t0SDvIdssmU1q3gT@pokegatos.qrspmc9.mongodb.net/?retryWrites=true&w=majority";
+  const uri = process.env.URL;
 
   const client = new MongoClient(uri, {
     serverApi: {

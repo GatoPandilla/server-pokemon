@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { MongoClient } from 'mongodb'; // Importa MongoClient desde 'mongodb'
+import { MongoClient } from 'mongodb';
 
 @Injectable()
 export class PokemonService {
@@ -13,23 +13,28 @@ export class PokemonService {
 
   async insertPokemonsToDatabase(limit: number) {
     const pokemons = await this.getPokemons(limit);
-
-    const uri = "mongodb+srv://jharoldm:t0SDvIdssmU1q3gT@pokegatos.qrspmc9.mongodb.net/?retryWrites=true&w=majority";
+  
+    const uri = process.env.URL;
     const client = new MongoClient(uri);
-
+  
     try {
       await client.connect();
-
+  
       const database = client.db('pokegatos');
       const collection = database.collection('pokemons');
-
-      await collection.insertMany(pokemons);
-
+  
+      const distinctNames = await collection.distinct('name');
+  
+      const filteredPokemons = pokemons.filter((pokemon) => {
+        return !distinctNames.includes(pokemon.name);
+      });
+  
+      await collection.insertMany(filteredPokemons);
+  
       console.log('Pokemons inserted into the database');
     } catch (error) {
       console.error('Error inserting pokemons:', error);
     } finally {
       await client.close();
     }
-  }
-}
+  }}

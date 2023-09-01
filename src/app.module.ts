@@ -1,18 +1,33 @@
-import { Module } from '@nestjs/common';
+import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
+import { MongoClient } from 'mongodb'; // Importa el MongoClient
+import { connectToMongoDB } from './mongolico'; // 
+import { PokemonService } from './pokemon/pokemon.service';
+import { AppControllera } from './app.controller';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/pokemon'),
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController,AppControllera],
+  providers: [AppService, PokemonService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit, OnApplicationShutdown {
+  private client: MongoClient;
+
+  async onModuleInit() {
+    this.client = await connectToMongoDB();
+  }
+
+  async onApplicationShutdown() {
+    if (this.client) {
+      await this.client.close();
+      console.log('Closed MongoDB connection');
+    }
+  }
+}

@@ -17,8 +17,8 @@ export class PokemonTypeController {
       const client = new MongoClient(uri);
 
       await client.connect();
-      const db = client.db();
-      const collection = db.collection('pokemonTypes');
+      const db = client.db('pokegatos');
+      const collection = db.collection('types');
 
       for (const type of types) {
         const existingType = await collection.findOne({ name: type.name });

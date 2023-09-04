@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PokemonService } from './pokemon/pokemon.service';

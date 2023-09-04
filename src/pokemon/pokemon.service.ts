@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { MongoClient } from 'mongodb';

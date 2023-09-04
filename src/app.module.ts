@@ -1,11 +1,9 @@
 import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { JwtModule } from '@nestjs/jwt';
 import { MongoClient } from 'mongodb'; // Importa el MongoClient
-import { connectToMongoDB } from './mongolico'; // 
+import { connectToMongoDB } from './mongolico';
 import { PokemonService } from './pokemon/pokemon.service';
-import { AppControllera } from './app.controller';
 
 @Module({
   imports: [
@@ -14,8 +12,8 @@ import { AppControllera } from './app.controller';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [AppController,AppControllera],
-  providers: [AppService, PokemonService],
+  controllers: [AppController],
+  providers: [PokemonService],
 })
 export class AppModule implements OnModuleInit, OnApplicationShutdown {
   private client: MongoClient;

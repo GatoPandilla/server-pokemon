@@ -1,21 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { AppService } from './app.service';
 import { ApiTags } from '@nestjs/swagger';
 import { PokemonService } from './pokemon/pokemon.service';
 
-@Controller()
-@ApiTags('putoelquelolea')
-export class AppControllera {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-}
-
 @Controller('pokemon')
-@ApiTags("pokemons")
+@ApiTags('pokemons')
 export class AppController {
   constructor(private readonly pokemonService: PokemonService) {}
 

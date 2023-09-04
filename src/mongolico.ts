@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
 export async function connectToMongoDB() {

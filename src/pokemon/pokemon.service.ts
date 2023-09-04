@@ -38,4 +38,30 @@ export class PokemonService {
       await client.close();
     }
   }
+
+  async getAllPokemons(): Promise<any[]> {
+    const uri = process.env.URL;
+    const client = new MongoClient(uri);
+
+    try {
+      await client.connect();
+
+      const database = client.db('pokegatos');
+      const collection = database.collection('pokemons');
+
+      const dbPokemons = await collection.find().toArray();
+
+      const limit = 1010;
+      const apiPokemons = await this.getPokemons(limit);
+
+      const allPokemons = [...dbPokemons, ...apiPokemons];
+
+      return allPokemons;
+    } catch (error) {
+      console.error('Error obteniendo todos los Pokémon:', error);
+      throw error;
+    } finally {
+      await client.close();
+    }
+  }
 }

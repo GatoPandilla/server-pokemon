@@ -7,7 +7,7 @@ import { PokemonService } from './pokemon/pokemon.service';
 export class AppController {
   constructor(private readonly pokemonService: PokemonService) {}
 
-  @Get()
+  @Get('pokes')
   async getPokemons(@Query('limit') limit: number = 20) {
     const data = await this.pokemonService.getPokemons(limit);
     return data;
@@ -17,5 +17,11 @@ export class AppController {
   async insertPokemons(@Query('limit') limit: number = 20) {
     await this.pokemonService.insertPokemonsToDatabase(limit);
     return 'Pokemons inserted into the database';
+  }
+
+  @Get()
+  async getAllPokemons() {
+    const allPokemons = await this.pokemonService.getAllPokemons();
+    return allPokemons;
   }
 }

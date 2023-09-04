@@ -1,9 +1,10 @@
 import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { MongoClient } from 'mongodb'; // Importa el MongoClient
+import { MongoClient } from 'mongodb';
 import { connectToMongoDB } from './mongolico';
 import { PokemonService } from './pokemon/pokemon.service';
+import { PokemonTypeController } from './types/pokemon-type.controller';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { PokemonService } from './pokemon/pokemon.service';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  controllers: [AppController],
+  controllers: [AppController, PokemonTypeController],
   providers: [PokemonService],
 })
 export class AppModule implements OnModuleInit, OnApplicationShutdown {

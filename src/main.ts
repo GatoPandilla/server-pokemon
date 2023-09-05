@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   dotenv.config();
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('My API')
     .setDescription('API description')
@@ -15,6 +16,5 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
-bootstrap();
 
-//entrar http://localhost:3000/api para ver la interfaz de swagger
+bootstrap();

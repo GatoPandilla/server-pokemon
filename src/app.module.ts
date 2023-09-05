@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { JwtModule } from '@nestjs/jwt';

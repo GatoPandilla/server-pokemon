@@ -30,6 +30,12 @@ export class PokemonService {
         return !distinctNames.includes(pokemon.name);
       });
 
+      filteredPokemons.sort((a, b) => {
+        const idA = parseInt(a.url.split('/').slice(-2, -1)[0], 10);
+        const idB = parseInt(b.url.split('/').slice(-2, -1)[0], 10);
+        return idA - idB;
+      });
+
       await collection.insertMany(filteredPokemons);
 
       console.log('Pokemons inserted into the database');
